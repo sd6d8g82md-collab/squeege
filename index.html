@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Squeegee Squad — Driveway-Side Car Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-dark:#0D2C24;
+    --green-mid:#143A2F;
+    --gold:#B9924D;
+    --gold-light:#C9A863;
+    --ivory:#FAF6EF;
+    --ink:#211D17;
+    --muted:#6B6152;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--ivory);
+    line-height:1.5;
+  }
+  .serif{font-family:'Tinos', 'Times New Roman', serif;}
+  a{text-decoration:none; color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+  section{padding:88px 0;}
+
+  /* ---------------- HERO ---------------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    background:
+      linear-gradient(100deg,
+        var(--green-dark) 0%, var(--green-dark) 62.5%,
+        var(--gold) 62.5%, var(--gold) 62.85%,
+        var(--green-mid) 62.85%, var(--green-mid) 100%);
+    color:#fff;
+    padding:110px 0 100px 0;
+  }
+  .crest{
+    width:56px; height:56px;
+    border:1.4px solid var(--gold-light);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Tinos', serif;
+    font-size:19px;
+    color:var(--gold-light);
+    margin-bottom:24px;
+  }
+  .eyebrow{
+    font-weight:400;
+    letter-spacing:4px;
+    font-size:12.5px;
+    color:var(--gold-light);
+    text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(42px, 7vw, 70px);
+    font-weight:700;
+    line-height:1.05;
+    margin-top:18px;
+    max-width:10ch;
+  }
+  .hero p{
+    font-size:18px;
+    font-style:italic;
+    color:#D7E1DA;
+    max-width:40ch;
+    margin-top:18px;
+    font-family:'Tinos', serif;
+  }
+  .cta-row{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    font-weight:600;
+    font-size:14.5px;
+    letter-spacing:.3px;
+    padding:14px 28px;
+    border-radius:2px;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    font-family:'Inter',sans-serif;
+  }
+  .btn-primary{background:var(--gold-light); color:var(--green-dark);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(201,168,99,.35);}
+  .btn-ghost{border:1.4px solid rgba(255,255,255,.55); color:#fff;}
+  .btn-ghost:hover{background:rgba(255,255,255,.10); border-color:#fff;}
+
+  /* ---------------- SHARED SECTION HEADS ---------------- */
+  h2.section-title{
+    font-size:clamp(28px,4vw,36px);
+    font-weight:700;
+    color:var(--green-dark);
+    font-family:'Tinos', serif;
+  }
+  .section-kicker{
+    font-size:12px; font-weight:600; letter-spacing:2.5px;
+    color:var(--gold); text-transform:uppercase; margin-bottom:10px;
+  }
+  .section-rule{width:44px; height:2px; background:var(--gold); margin-top:14px;}
+
+  /* ---------------- HOW IT WORKS ---------------- */
+  .how-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+    margin-top:44px;
+  }
+  .how-step{text-align:left;}
+  .how-num{
+    width:40px; height:40px; border-radius:50%;
+    border:1.3px solid var(--gold);
+    color:var(--green-dark);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:15px; font-family:'Tinos', serif;
+    margin-bottom:14px;
+  }
+  .how-step h3{font-size:15px; margin-bottom:6px; color:var(--green-dark); letter-spacing:.4px; text-transform:uppercase;}
+  .how-step p{font-size:14.5px; color:var(--muted);}
+
+  /* ---------------- PRICING ---------------- */
+  .pricing-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+    margin-top:40px;
+  }
+  .price-card{
+    background:#fff;
+    border:1px solid #E3D8C2;
+    padding:32px 26px;
+    text-align:left;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .price-card:hover{transform:translateY(-4px); box-shadow:0 16px 32px rgba(13,44,36,.08);}
+  .price-card.featured{
+    background:var(--green-dark); color:#fff; border-color:var(--green-dark);
+  }
+  .price-card .name{font-weight:600; font-size:13.5px; letter-spacing:.6px; text-transform:uppercase; color:var(--muted);}
+  .price-card.featured .name{color:#D7E1DA;}
+  .price-card .amt{font-family:'Tinos', serif; font-size:38px; font-weight:700; margin:12px 0 8px 0;}
+  .price-card .desc{font-size:14px; line-height:1.5; color:var(--muted);}
+  .price-card.featured .desc{color:#C9D6CE;}
+  .badge{
+    display:inline-block;
+    border:1px solid var(--gold-light);
+    color:var(--gold-light);
+    font-size:10.5px; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:4px 12px;
+    margin-bottom:14px;
+  }
+  .addons{
+    margin-top:24px;
+    border-top:1px solid #E3D8C2;
+    border-bottom:1px solid #E3D8C2;
+    padding:18px 4px;
+    display:flex; gap:28px; flex-wrap:wrap;
+    font-size:14.5px;
+    color:var(--muted);
+  }
+  .addons b{color:var(--green-dark);}
+
+  /* ---------------- GALLERY ---------------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+    margin-top:40px;
+  }
+  .gallery-card{
+    aspect-ratio:4/3;
+    background:#F1EBDC;
+    border:1.3px dashed #C9B98F;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:#8A7A57; font-size:13.5px; font-weight:500; text-align:center; gap:6px;
+  }
+
+  /* ---------------- CONTACT ---------------- */
+  .contact-section{
+    background:var(--green-dark);
+    color:#fff;
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:50px;
+    margin-top:40px;
+  }
+  .contact-section .section-kicker{color:var(--gold-light);}
+  .contact-section h2{color:#fff;}
+  .contact-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.18);
+    padding:28px;
+  }
+  .contact-row{display:flex; justify-content:space-between; align-items:center; padding:13px 0; border-bottom:1px solid rgba(255,255,255,.14); font-size:15px;}
+  .contact-row:last-child{border-bottom:none;}
+  .contact-row span:first-child{color:#B9CFCD;}
+  .contact-row span:last-child{font-weight:600;}
+  .area-note{margin-top:18px; font-size:14px; color:#B9CFCD; font-style:italic; font-family:'Tinos', serif;}
+
+  /* ---------------- FOOTER ---------------- */
+  footer{
+    padding:26px 0;
+    text-align:center;
+    font-size:12.5px;
+    color:#9C8F71;
+    background:var(--ivory);
+  }
+
+  @media (max-width:760px){
+    .how-grid, .pricing-grid, .gallery-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    section{padding:60px 0;}
+  }
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="crest">SS</div>
+      <span class="eyebrow">Driveway-Side Car Care</span>
+      <h1 class="serif">Squeegee Squad</h1>
+      <p>We bring the shine to your driveway — no drop-off, no waiting room. Serving [Your Neighborhood] &amp; nearby streets.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="sms:+19803987269">Text to Book</a>
+        <a class="btn btn-ghost" href="#pricing">See Pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-kicker reveal">Simple by design</div>
+      <h2 class="section-title reveal">How it works</h2>
+      <div class="section-rule reveal"></div>
+      <div class="how-grid">
+        <div class="how-step reveal">
+          <div class="how-num">1</div>
+          <h3>Text or scan</h3>
+          <p>Send your address and pick a package — no app, no account.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="how-num">2</div>
+          <h3>We show up</h3>
+          <p>Just need access to your hose spigot and an outlet nearby.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="how-num">3</div>
+          <h3>You shine</h3>
+          <p>We detail your ride right in your driveway while you relax.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" style="background:#fff;">
+    <div class="wrap">
+      <div class="section-kicker reveal">Pick your shine</div>
+      <h2 class="section-title reveal">Services &amp; pricing</h2>
+      <div class="section-rule reveal"></div>
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <div class="name">Exterior deep clean</div>
+          <div class="amt serif">$60</div>
+          <div class="desc">Wash &amp; dry, wheels &amp; tires, windows.</div>
+        </div>
+        <div class="price-card reveal">
+          <div class="name">Interior deep clean</div>
+          <div class="amt serif">$60</div>
+          <div class="desc">Vacuum, wipe-down, windows, cupholders &amp; vents.</div>
+        </div>
+        <div class="price-card featured reveal">
+          <span class="badge">Most Popular</span>
+          <div class="name">Both</div>
+          <div class="amt serif">$100</div>
+          <div class="desc">Full interior + exterior deep clean.</div>
+        </div>
+      </div>
+      <div class="addons reveal">
+        <span><b>Rain-X Treatment</b> — +$10</span>
+        <span><b>Extreme Tire Shine</b> — +$7.50</span>
+        <span><b>"Little Tree" Freshener</b> — +$3.50</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-kicker reveal">Recent work</div>
+      <h2 class="section-title reveal">Before &amp; after</h2>
+      <div class="section-rule reveal"></div>
+      <div class="gallery-grid">
+        <div class="gallery-card reveal">📷<br>Add a before/after photo</div>
+        <div class="gallery-card reveal">📷<br>Add a before/after photo</div>
+        <div class="gallery-card reveal">📷<br>Add a before/after photo</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="wrap">
+      <div class="section-kicker reveal">Get in touch</div>
+      <h2 class="section-title reveal">Book your wash</h2>
+      <div class="section-rule reveal"></div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <p style="color:#D7E9E7; font-size:15.5px; max-width:42ch;">
+            Run by two neighborhood students — quick, careful, and easy to reach.
+            First-time customer? Ask about our intro price.
+          </p>
+          <div class="area-note">Serving [Your Neighborhood] &amp; nearby streets.</div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-row"><span>Text / Call</span><span>(980) 398-7269</span></div>
+          <div class="contact-row"><span>Venmo</span><span>@[YourVenmo]</span></div>
+          <div class="contact-row"><span>Hours</span><span>[Evenings &amp; Weekends]</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Squeegee Squad · [Your Neighborhood] · Edit every [bracketed] placeholder before publishing
+  </footer>
+
+<script>
+  const items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    items.forEach(el => io.observe(el));
+  } else {
+    items.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
