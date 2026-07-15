@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Wash — Squeegee Squad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-dark:#0D2C24;
+    --green-mid:#143A2F;
+    --gold:#B9924D;
+    --gold-light:#C9A863;
+    --ivory:#FAF6EF;
+    --ink:#211D17;
+    --muted:#6B6152;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--ivory);
+    line-height:1.5;
+  }
+  .serif{font-family:'Tinos','Times New Roman',serif;}
+  .wrap{max-width:640px; margin:0 auto; padding:0 24px 80px 24px;}
+
+  .hero{
+    background:linear-gradient(100deg,
+      var(--green-dark) 0%, var(--green-dark) 62.5%,
+      var(--gold) 62.5%, var(--gold) 62.85%,
+      var(--green-mid) 62.85%, var(--green-mid) 100%);
+    color:#fff;
+    padding:64px 24px 46px 24px;
+    text-align:center;
+  }
+  .crest{
+    width:52px; height:52px;
+    border:1.4px solid var(--gold-light);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Tinos', serif;
+    font-size:18px;
+    color:var(--gold-light);
+    margin:0 auto 18px auto;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:3.5px; text-transform:uppercase;
+    color:var(--gold-light);
+  }
+  .hero h1{
+    font-size:clamp(30px,6vw,42px);
+    margin-top:10px;
+  }
+  .hero p{
+    font-family:'Tinos', serif;
+    font-style:italic;
+    color:#D7E1DA;
+    margin-top:10px;
+    font-size:15.5px;
+  }
+
+  form{
+    background:#fff;
+    margin-top:-30px;
+    border-radius:6px;
+    box-shadow:0 20px 40px rgba(13,44,36,.10);
+    padding:36px 30px;
+    position:relative;
+    z-index:2;
+  }
+  .field{margin-bottom:20px;}
+  label{
+    display:block;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+    color:var(--green-dark);
+    margin-bottom:7px;
+  }
+  input[type=text], input[type=tel], input[type=email], input[type=date], input[type=time], textarea, select{
+    width:100%;
+    padding:12px 13px;
+    border:1.3px solid #DDD2BC;
+    border-radius:3px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    background:#FCFAF5;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--gold);
+  }
+  .radio-group, .check-group{
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .radio-group label, .check-group label{
+    display:flex; align-items:center; gap:10px;
+    font-size:14.5px; font-weight:500; letter-spacing:0;
+    text-transform:none; color:var(--ink);
+    cursor:pointer;
+  }
+  .radio-group input, .check-group input{width:auto;}
+  .price-tag{color:var(--muted); font-weight:400; margin-left:auto; font-size:13.5px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+
+  button[type=submit]{
+    width:100%;
+    background:var(--green-dark);
+    color:var(--gold-light);
+    border:none;
+    padding:16px;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.4px;
+    border-radius:3px;
+    cursor:pointer;
+    transition:background .15s ease;
+    margin-top:6px;
+  }
+  button[type=submit]:hover{background:var(--green-mid);}
+  button[type=submit]:disabled{opacity:.6; cursor:default;}
+
+  .thankyou{
+    display:none;
+    background:#fff;
+    margin-top:-30px;
+    border-radius:6px;
+    box-shadow:0 20px 40px rgba(13,44,36,.10);
+    padding:60px 30px;
+    text-align:center;
+    position:relative; z-index:2;
+  }
+  .thankyou .check{
+    width:56px; height:56px; border-radius:50%;
+    border:1.4px solid var(--gold);
+    color:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; margin:0 auto 20px auto;
+  }
+  .thankyou h2{font-family:'Tinos',serif; color:var(--green-dark); font-size:26px;}
+  .thankyou p{color:var(--muted); margin-top:12px; font-size:15px;}
+
+  @media (max-width:520px){ .row2{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="crest">SS</div>
+    <div class="eyebrow">Squeegee Squad</div>
+    <h1 class="serif">Book Your Wash</h1>
+    <p>Fill this out and we'll text you to confirm.</p>
+  </div>
+
+  <div class="wrap">
+    <form id="bookingForm">
+      <div class="field">
+        <label>Your Name</label>
+        <input type="text" name="name" required>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" required>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Address</label>
+        <input type="text" name="address" required>
+      </div>
+
+      <div class="field">
+        <label>Service</label>
+        <div class="radio-group">
+          <label><input type="radio" name="service" value="Exterior Deep Clean" required> Exterior Deep Clean <span class="price-tag">$60</span></label>
+          <label><input type="radio" name="service" value="Interior Deep Clean" required> Interior Deep Clean <span class="price-tag">$60</span></label>
+          <label><input type="radio" name="service" value="Both" required> Both (Save $20) <span class="price-tag">$100</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Add-ons</label>
+        <div class="check-group">
+          <label><input type="checkbox" name="rainx" value="yes"> Rain-X Treatment <span class="price-tag">+$10</span></label>
+          <label><input type="checkbox" name="tireshine" value="yes"> Extreme Tire Shine <span class="price-tag">+$7.50</span></label>
+          <label><input type="checkbox" name="tree" value="yes"> "Little Tree" Freshener <span class="price-tag">+$3.50</span></label>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Preferred Date</label>
+          <input type="date" name="date" required>
+        </div>
+        <div class="field">
+          <label>Preferred Time</label>
+          <input type="time" name="time" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Anything else we should know?</label>
+        <textarea name="notes" rows="3"></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">Request Booking</button>
+    </form>
+
+    <div class="thankyou" id="thankyou">
+      <div class="check">&#10003;</div>
+      <h2 class="serif">Got it — thank you!</h2>
+      <p>We'll text you shortly to confirm your time. Check your email for a copy of your booking details.</p>
+    </div>
+  </div>
+
+<script>
+  // Paste the Web app URL from your Apps Script deployment between the quotes below.
+  const ENDPOINT_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+
+  const form = document.getElementById('bookingForm');
+  const btn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    const formData = new FormData(form);
+
+    fetch(ENDPOINT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    }).then(function () {
+      form.style.display = 'none';
+      document.getElementById('thankyou').style.display = 'block';
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'Request Booking';
+      alert('Something went wrong sending your booking — please try again, or text us directly.');
+    });
+  });
+</script>
+
+</body>
+</html>
