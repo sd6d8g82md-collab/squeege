@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Your Wash — Squeegee Squad</title>
+<title>Book Your Clean — Bin Refresh</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --green-dark:#0D2C24;
-    --green-mid:#143A2F;
+    --green-mid:#1F5343;
     --gold:#B9924D;
     --gold-light:#C9A863;
     --ivory:#FAF6EF;
@@ -29,9 +29,9 @@
 
   .hero{
     background:linear-gradient(100deg,
-      var(--green-dark) 0%, var(--green-dark) 62.5%,
-      var(--gold) 62.5%, var(--gold) 62.85%,
-      var(--green-mid) 62.85%, var(--green-mid) 100%);
+      var(--green-dark) 0%, var(--green-dark) 55%,
+      var(--green-mid) 55%, var(--green-mid) 88%,
+      var(--gold) 88%, var(--gold) 100%);
     color:#fff;
     padding:64px 24px 46px 24px;
     text-align:center;
@@ -72,6 +72,21 @@
     z-index:2;
   }
   .field{margin-bottom:20px;}
+  .field-hint{font-size:12px;color:var(--muted);margin-top:5px;}
+  .field-hint.error{color:#B23A2E;font-weight:600;}
+  input.invalid{border-color:#B23A2E;background:#FBEDEB;}
+  .area-warning{
+    display:none;
+    background:#FBEDEB;
+    border:1px solid #E0B4AE;
+    color:#8A2E22;
+    font-size:13.5px;
+    padding:12px 14px;
+    border-radius:4px;
+    margin:-4px 0 20px 0;
+    line-height:1.45;
+  }
+  .area-warning.show{display:block;}
   label{
     display:block;
     font-size:12.5px;
@@ -151,9 +166,9 @@
 <body>
 
   <div class="hero">
-    <div class="crest">SS</div>
-    <div class="eyebrow">Squeegee Squad</div>
-    <h1 class="serif">Book Your Wash</h1>
+    <div class="crest">BR</div>
+    <div class="eyebrow">Bin Refresh</div>
+    <h1 class="serif">Book Your Clean</h1>
     <p>Fill this out and we'll text you to confirm.</p>
   </div>
 
@@ -174,25 +189,30 @@
         </div>
       </div>
       <div class="field">
-        <label>Address</label>
-        <input type="text" name="address" required>
+        <label>Street Address</label>
+        <input type="text" name="address" id="addressField" placeholder="e.g. 123 Main St" required>
+        <div class="field-hint" id="addressHint">Include your house number and street name.</div>
       </div>
 
-      <div class="field">
-        <label>Service</label>
-        <div class="radio-group">
-          <label><input type="radio" name="service" value="Exterior Deep Clean" required> Exterior Deep Clean <span class="price-tag">$60</span></label>
-          <label><input type="radio" name="service" value="Interior Deep Clean" required> Interior Deep Clean <span class="price-tag">$60</span></label>
-          <label><input type="radio" name="service" value="Both" required> Both (Save $20) <span class="price-tag">$100</span></label>
+      <div class="row2">
+        <div class="field">
+          <label>City</label>
+          <input type="text" name="city" placeholder="Weddington">
+        </div>
+        <div class="field">
+          <label>ZIP Code</label>
+          <input type="text" name="zip" id="zipField" inputmode="numeric" maxlength="5" placeholder="28104" required>
         </div>
       </div>
+      <div class="area-warning" id="areaWarning"></div>
 
       <div class="field">
-        <label>Add-ons</label>
-        <div class="check-group">
-          <label><input type="checkbox" name="rainx" value="yes"> Rain-X Treatment <span class="price-tag">+$10</span></label>
-          <label><input type="checkbox" name="tireshine" value="yes"> Extreme Tire Shine <span class="price-tag">+$7.50</span></label>
-          <label><input type="checkbox" name="tree" value="yes"> "Little Tree" Freshener <span class="price-tag">+$3.50</span></label>
+        <label>Service &amp; Plan</label>
+        <div class="radio-group">
+          <label><input type="radio" name="service" value="One-Time, 1 Bin" required> One-time, 1 bin <span class="price-tag">$15</span></label>
+          <label><input type="radio" name="service" value="One-Time, 2 Bins" required> One-time, 2 bins <span class="price-tag">$25</span></label>
+          <label><input type="radio" name="service" value="Monthly Plan, 1 Bin" required> Monthly plan, 1 bin <span class="price-tag">$15/mo</span></label>
+          <label><input type="radio" name="service" value="Monthly Plan, 2 Bins" required> Monthly plan, 2 bins <span class="price-tag">$22/mo</span></label>
         </div>
       </div>
 
@@ -223,14 +243,66 @@
   </div>
 
 <script>
-  // Paste the Web app URL from your Apps Script deployment between the quotes below.
   const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbzWoK36UnGxx3xon_J-INs_5hxFZnlDmLXDvT6gY-b1O3mpp9Dhsu9vvzGa-XW5DjAPQA/exec";
 
   const form = document.getElementById('bookingForm');
   const btn = document.getElementById('submitBtn');
 
+  const SERVICE_ZIPS = ['28104', '28173'];
+
+  const addressField = document.getElementById('addressField');
+  const addressHint = document.getElementById('addressHint');
+  const zipField = document.getElementById('zipField');
+  const areaWarning = document.getElementById('areaWarning');
+
+  zipField.addEventListener('input', function () {
+    const zip = zipField.value.trim();
+    if (zip.length === 5 && !SERVICE_ZIPS.includes(zip)) {
+      areaWarning.textContent = "Heads up: that ZIP looks like it's outside our usual service area (Weddington & nearby). You can still submit, and we'll text you to see if we can make it work.";
+      areaWarning.classList.add('show');
+    } else {
+      areaWarning.classList.remove('show');
+    }
+  });
+
+  function addressLooksComplete(val) {
+    const v = val.trim();
+    const hasNumber = /\d/.test(v);
+    const wordCount = v.split(/\s+/).filter(Boolean).length;
+    return hasNumber && wordCount >= 2 && v.length >= 5;
+  }
+
+  function validZip(val) {
+    return /^\d{5}$/.test(val.trim());
+  }
+
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
+
+    let ok = true;
+    if (!addressLooksComplete(addressField.value)) {
+      addressField.classList.add('invalid');
+      addressHint.textContent = 'Please enter a full street address, including your house number and street name.';
+      addressHint.classList.add('error');
+      ok = false;
+    } else {
+      addressField.classList.remove('invalid');
+      addressHint.textContent = 'Include your house number and street name.';
+      addressHint.classList.remove('error');
+    }
+
+    if (!validZip(zipField.value)) {
+      zipField.classList.add('invalid');
+      ok = false;
+    } else {
+      zipField.classList.remove('invalid');
+    }
+
+    if (!ok) {
+      addressField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
     btn.disabled = true;
     btn.textContent = 'Sending...';
 
